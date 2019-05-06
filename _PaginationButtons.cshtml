@@ -1,0 +1,30 @@
+﻿@using Accounting.UI.Web.Services
+@model Accounting.UI.Web.Models.PaginationList
+
+@if (Model.PagesList.Any())
+{
+    <nav>
+        <ul class="pagination">
+            @foreach (var pageItem in Model.PagesList)
+            {
+
+                if (!pageItem.IsButton)
+                {
+                    <li class="disabled"><a href="#">@pageItem.Caption</a></li>
+                }
+                else
+                {
+                    string active = pageItem.PageNumber == Model.CurrentPage ? "active" : "";
+
+                    <li class="@active">
+                        @Html.MyLink(pageItem.Caption, Model.Action, Model.Controller, Model.RouteValues, new { skip = pageItem.PageNumber })
+                        @*@Html.ActionLink(pageItem.Caption, Model.Action, Model.Controller, new {Model.RouteValues, skip = pageItem.PageNumber})*@
+                        @*<a asp-controller="@Model.Controller"
+                           asp-action="@Model.Action"
+                           asp-route-skip="@pageItem.PageNumber">@pageItem.Caption</a>*@
+                    </li>
+                }
+            }
+        </ul>
+    </nav>
+}
